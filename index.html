@@ -29,63 +29,43 @@
 
 <style>
 /* ════════════════════════════════════════════════════════════════════
-   §CSS-1  DESIGN TOKENS  —  Alles hier zentral anpassen
+   §CSS-1  DESIGN TOKENS
    ════════════════════════════════════════════════════════════════════ */
 :root {
-  /* Hintergründe */
   --bg:           #050810;
   --bg-nav:       rgba(5,8,16,.82);
   --bg-glass:     rgba(10,14,30,.68);
-
-  /* Text */
   --text:         #F0EDE8;
   --muted:        #7a7f99;
   --subtle:       #2a2e45;
-
-  /* Akzent  ← wird durch [data-color] überschrieben */
   --accent:       #16a085;
   --accent-rgb:   22,160,133;
   --accent-dim:   rgba(22,160,133,.09);
   --accent-bdr:   rgba(22,160,133,.30);
   --bdr-hover:    rgba(22,160,133,.46);
-
-  /* Borders */
   --bdr:          rgba(255,255,255,.08);
-
-  /* Glow */
   --glow-sm: 0 0 12px rgba(22,160,133,.32);
   --glow-md: 0 0 22px rgba(22,160,133,.40), 0 0 65px rgba(22,160,133,.14);
   --glow-lg: 0 0 40px rgba(22,160,133,.50), 0 0 110px rgba(22,160,133,.16);
-
-  /* Yin-Yang — immer Schwarz/Cremeweiß, unabhängig vom Theme */
   --yy-dark:  #06090F;
   --yy-light: #F4F0EB;
-
-  /* Hintergrund-Orbs */
   --orb1: rgba(22,160,133,.13);
   --orb2: rgba(60,120,255,.10);
   --orb3: rgba(180,40,255,.08);
-
-  /* Schriften */
   --fd: 'Syne','Noto Sans Arabic',sans-serif;
   --fm: 'JetBrains Mono','Noto Sans Arabic',monospace;
-
-  /* Animationszeiten  ✏ ANPASSEN */
-  --dur-yy:    18s;   /* Yin-Yang eine volle Drehung          */
-  --dur-orbit: 10s;   /* Umlaufbahn                           */
-  --dur-mode:  1.4s;  /* Dark/Light-Übergang                  */
+  --dur-yy:    18s;
+  --dur-orbit: 10s;
+  --dur-mode:  1.4s;
   --dur-orb1:  22s;
   --dur-orb2:  18s;
   --dur-orb3:  28s;
-
-  /* Maße  ✏ ANPASSEN */
-  --yy-size:   310px; /* Yin-Yang Durchmesser                 */
+  --yy-size:   310px;
   --nav-h:      60px;
   --card-r:     14px;
   --blur:       18px;
 }
 
-/* ── Farb-Themes ────────────────────────────────────────────────── */
 :root[data-color="teal"] {
   --accent:#16a085;--accent-rgb:22,160,133;
   --accent-dim:rgba(22,160,133,.09);--accent-bdr:rgba(22,160,133,.30);--bdr-hover:rgba(22,160,133,.46);
@@ -117,7 +97,6 @@
   --orb1:rgba(168,85,247,.12);--orb2:rgba(80,0,180,.14);--orb3:rgba(220,60,255,.08);
 }
 
-/* ── Light Mode: system ─────────────────────────────────────────── */
 @media (prefers-color-scheme:light) {
   :root[data-mode="auto"] {
     --bg:#EDF1F7;--bg-nav:rgba(237,241,247,.88);--bg-glass:rgba(255,255,255,.76);
@@ -125,16 +104,12 @@
     --orb1:rgba(22,160,133,.08);--orb2:rgba(60,120,255,.06);--orb3:rgba(180,40,255,.05);
   }
 }
-/* ── Light Mode: manuell ────────────────────────────────────────── */
 :root[data-mode="light"] {
   --bg:#EDF1F7;--bg-nav:rgba(237,241,247,.88);--bg-glass:rgba(255,255,255,.76);
   --text:#08101E;--muted:#4a506b;--subtle:#b8c0d4;--bdr:rgba(0,0,0,.08);
   --orb1:rgba(22,160,133,.08);--orb2:rgba(60,120,255,.06);--orb3:rgba(180,40,255,.05);
 }
 
-/* ════════════════════════════════════════════════════════════════════
-   §CSS-2  RESET & BASE
-   ════════════════════════════════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
@@ -147,62 +122,22 @@ body{
 html[lang="ar"] body        {font-family:'Noto Sans Arabic',sans-serif}
 html[lang="ar"] .hero-title {font-family:'Noto Sans Arabic',sans-serif;letter-spacing:0;line-height:1.2;font-size:clamp(2.2rem,6vw,5.5rem)}
 
-/* ════════════════════════════════════════════════════════════════════
-   §CSS-3  CANVAS / ORBS / CURSOR / PROGRESS
-   ════════════════════════════════════════════════════════════════════ */
 #starfield{position:fixed;inset:0;z-index:0;pointer-events:none}
-
 .orb{position:fixed;border-radius:50%;filter:blur(88px);pointer-events:none;z-index:1;animation:orbFloat linear infinite;transition:background var(--dur-mode) ease}
 .orb-1{width:650px;height:650px;background:var(--orb1);top:-180px;right:-220px;animation-duration:var(--dur-orb1)}
 .orb-2{width:520px;height:520px;background:var(--orb2);bottom:-130px;left:-200px;animation-duration:var(--dur-orb2);animation-delay:-8s}
 .orb-3{width:380px;height:380px;background:var(--orb3);top:40%;left:40%;animation-duration:var(--dur-orb3);animation-delay:-14s}
 @keyframes orbFloat{0%{transform:translate(0,0) scale(1)}33%{transform:translate(32px,-48px) scale(1.05)}66%{transform:translate(-22px,30px) scale(.96)}100%{transform:translate(0,0) scale(1)}}
 
-.cursor-dot{
-  width:10px;height:10px;background:var(--accent);border-radius:50%;
-  position:fixed;pointer-events:none;z-index:9999;
-  transform:translate(-50%,-50%);
-  box-shadow:0 0 10px rgba(var(--accent-rgb),1),0 0 28px rgba(var(--accent-rgb),.65),0 0 55px rgba(var(--accent-rgb),.3);
-  transition:width .12s,height .12s,background var(--dur-mode) ease,box-shadow var(--dur-mode) ease;
-  mix-blend-mode:screen;
-}
-.cursor-ring{
-  width:40px;height:40px;
-  border:2px solid rgba(var(--accent-rgb),.72);
-  border-radius:50%;position:fixed;pointer-events:none;z-index:9998;
-  transform:translate(-50%,-50%);
-  box-shadow:0 0 12px rgba(var(--accent-rgb),.28),inset 0 0 12px rgba(var(--accent-rgb),.10);
-  transition:width .28s cubic-bezier(.2,1,.4,1),height .28s cubic-bezier(.2,1,.4,1),border-color .28s,box-shadow .28s;
-}
-.cursor-trail{
-  width:5px;height:5px;border-radius:50%;background:var(--accent);
-  position:fixed;pointer-events:none;z-index:9996;
-  transform:translate(-50%,-50%);
-  transition:background var(--dur-mode) ease;
-}
-.cursor-ripple{
-  position:fixed;border-radius:50%;pointer-events:none;z-index:9995;
-  border:2px solid rgba(var(--accent-rgb),.7);
-  transform:translate(-50%,-50%) scale(0);
-  animation:rippleOut .55s ease-out forwards;
-}
-@keyframes rippleOut{
-  0%  {transform:translate(-50%,-50%) scale(0);opacity:.9}
-  100%{transform:translate(-50%,-50%) scale(3.5);opacity:0}
-}
+.cursor-dot{width:10px;height:10px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);box-shadow:0 0 10px rgba(var(--accent-rgb),1),0 0 28px rgba(var(--accent-rgb),.65),0 0 55px rgba(var(--accent-rgb),.3);transition:width .12s,height .12s,background var(--dur-mode) ease,box-shadow var(--dur-mode) ease;mix-blend-mode:screen;}
+.cursor-ring{width:40px;height:40px;border:2px solid rgba(var(--accent-rgb),.72);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);box-shadow:0 0 12px rgba(var(--accent-rgb),.28),inset 0 0 12px rgba(var(--accent-rgb),.10);transition:width .28s cubic-bezier(.2,1,.4,1),height .28s cubic-bezier(.2,1,.4,1),border-color .28s,box-shadow .28s;}
+.cursor-trail{width:5px;height:5px;border-radius:50%;background:var(--accent);position:fixed;pointer-events:none;z-index:9996;transform:translate(-50%,-50%);transition:background var(--dur-mode) ease;}
+.cursor-ripple{position:fixed;border-radius:50%;pointer-events:none;z-index:9995;border:2px solid rgba(var(--accent-rgb),.7);transform:translate(-50%,-50%) scale(0);animation:rippleOut .55s ease-out forwards;}
+@keyframes rippleOut{0%{transform:translate(-50%,-50%) scale(0);opacity:.9}100%{transform:translate(-50%,-50%) scale(3.5);opacity:0}}
 
 #scroll-prog{position:fixed;top:0;left:0;height:2px;background:var(--accent);width:0%;z-index:999;box-shadow:var(--glow-sm);transition:width .1s linear}
 
-/* ════════════════════════════════════════════════════════════════════
-   §CSS-4  NAVIGATION
-   ════════════════════════════════════════════════════════════════════ */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);
-  padding:0 2.5rem;display:flex;justify-content:space-between;align-items:center;
-  border-bottom:1px solid var(--bdr);background:var(--bg-nav);
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  transition:background var(--dur-mode) ease,border-color var(--dur-mode) ease;
-}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);padding:0 2.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bdr);background:var(--bg-nav);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);transition:background var(--dur-mode) ease,border-color var(--dur-mode) ease;}
 .nav-logo{font-family:var(--fd);font-size:.96rem;font-weight:800;color:var(--text);text-decoration:none;letter-spacing:.04em;transition:color var(--dur-mode) ease}
 .nav-logo span{color:var(--accent);text-shadow:var(--glow-sm)}
 .nav-links{display:flex;gap:2rem;list-style:none}
@@ -210,42 +145,26 @@ nav{
 .nav-links a:hover{color:var(--accent)}
 .nav-right{display:flex;align-items:center;gap:.7rem}
 
-/* Farbpunkte */
 .theme-sw{display:flex;gap:.42rem;align-items:center}
 .th-dot{width:17px;height:17px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:transform .22s,border-color .22s;position:relative}
 .th-dot:hover,.th-dot.active{transform:scale(1.28);border-color:var(--text)}
 .th-dot.active::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(255,255,255,.25)}
 
-/* Sprache */
 .lang-sw{display:flex;border:1px solid var(--bdr);border-radius:7px;overflow:hidden;background:rgba(255,255,255,.03);transition:border-color var(--dur-mode) ease}
 .lang-btn{background:transparent;border:none;cursor:pointer;padding:5px 11px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-family:var(--fm);transition:background .15s,color .15s}
 .lang-btn+.lang-btn{border-left:1px solid var(--bdr)}
 .lang-btn.active{background:var(--accent-dim);color:var(--accent)}
 .lang-btn:hover:not(.active){color:var(--text);background:rgba(255,255,255,.05)}
 
-/* Mode-Toggle */
 .mode-btn{background:rgba(255,255,255,.04);border:1px solid var(--bdr);color:var(--muted);cursor:pointer;width:34px;height:28px;border-radius:7px;font-size:15px;display:flex;align-items:center;justify-content:center;transition:border-color .22s,color .22s,box-shadow .22s}
 .mode-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:var(--glow-sm)}
 
-/* ════════════════════════════════════════════════════════════════════
-   §CSS-5  HERO
-   ════════════════════════════════════════════════════════════════════ */
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 2.5rem calc(var(--nav-h) + 5rem);position:relative;overflow:hidden}
-
-/* Parallax-Gitter */
-.pl-grid{
-  position:absolute;inset:0;pointer-events:none;will-change:transform;z-index:1;
-  background-image:linear-gradient(rgba(255,255,255,.024) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.024) 1px,transparent 1px);
-  background-size:80px 80px;
-  mask-image:radial-gradient(ellipse at 72% 50%,black 0%,transparent 65%);
-  -webkit-mask-image:radial-gradient(ellipse at 72% 50%,black 0%,transparent 65%);
-  transition:opacity var(--dur-mode) ease;
-}
+.pl-grid{position:absolute;inset:0;pointer-events:none;will-change:transform;z-index:1;background-image:linear-gradient(rgba(255,255,255,.024) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.024) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse at 72% 50%,black 0%,transparent 65%);-webkit-mask-image:radial-gradient(ellipse at 72% 50%,black 0%,transparent 65%);transition:opacity var(--dur-mode) ease;}
 html[dir="rtl"] .pl-grid{mask-image:radial-gradient(ellipse at 28% 50%,black 0%,transparent 65%);-webkit-mask-image:radial-gradient(ellipse at 28% 50%,black 0%,transparent 65%)}
 :root[data-mode="light"] .pl-grid{background-image:linear-gradient(rgba(0,0,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.03) 1px,transparent 1px)}
 @media(prefers-color-scheme:light){:root[data-mode="auto"] .pl-grid{background-image:linear-gradient(rgba(0,0,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.03) 1px,transparent 1px)}}
 
-/* Hero-Texte */
 .hero-tag{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);text-shadow:var(--glow-sm);margin-bottom:1.5rem;opacity:0;animation:fadeUp .7s .2s forwards;position:relative;z-index:5}
 .hero-title{font-family:var(--fd);font-size:clamp(2.8rem,7vw,6.5rem);font-weight:800;line-height:.93;letter-spacing:-.03em;color:var(--text);margin-bottom:2rem;opacity:0;animation:fadeUp .7s .4s forwards;position:relative;z-index:5;transition:color var(--dur-mode) ease}
 .hero-title .dim   {color:var(--subtle);transition:color var(--dur-mode) ease}
@@ -257,129 +176,49 @@ html[dir="rtl"] .pl-grid{mask-image:radial-gradient(ellipse at 28% 50%,black 0%,
 html[dir="ltr"] .scroll-hint{right:2.5rem}
 html[dir="rtl"] .scroll-hint{left:2.5rem;right:auto}
 
-/* ════════════════════════════════════════════════════════════════════
-   §CSS-6  YIN-YANG COMPONENT
-   ════════════════════════════════════════════════════════════════════
-   Aufbau:
-     .yy-anchor    = fester Referenzpunkt im Hero (rechts, 50% Höhe)
-       .yy-arm     = bewegt sich auf Ellipsenbahn (transform via JS)
-         .yy-wrap  = Glow-Filter + Fade-In
-           #yySvg  = SVG-Symbol, vollständig via JS animiert
-
-   YIN-YANG SVG-GEOMETRIE (viewBox 0 0 310 310, Mittelpunkt 155,155):
-     Außenradius        R = 148
-     Kleine Kreise      r = 74  (= R/2)
-     Punkt-Radius       d = 27  (= R/5.5)
-
-   PFADE (alle Koordinaten relativ zu Mittelpunkt via <g translate>):
-     Dunkel (Yin):
-       M0,-148  → CW kleiner Bogen  biegt RECHTS → (0,0)
-                → CCW kleiner Bogen biegt LINKS  → (0,148)
-                → CW großer Bogen   linke Seite  → (0,-148)
-
-   PUNKTE — geometrisch verifiziert mit Ray-Casting:
-     Heller Punkt  cy=-74 → in dunkler Hälfte ✓
-     Dunkler Punkt cy=+74 → in heller  Hälfte ✓  (das ist der gesuchte "dunkle Punkt im Weißen")
-
-   ANIMATION (JS §JS-5):
-     Drehung im Uhrzeigersinn → dunkler Punkt bei 270° bewegt sich NACH OBEN
-                              → heller  Punkt bei  90° bewegt sich NACH UNTEN
-   ════════════════════════════════════════════════════════════════════ */
 .yy-anchor{position:absolute;right:8%;top:50%;width:0;height:0;pointer-events:none;z-index:3}
 html[dir="rtl"] .yy-anchor{right:auto;left:8%}
-
-.yy-arm{
-  position:absolute;
-  left:calc(var(--yy-size) / -2);
-  top:calc(var(--yy-size)  / -2);
-}
-
-.yy-wrap{
-  width:var(--yy-size);height:var(--yy-size);
-  opacity:0;animation:fadeIn 1.2s 1s forwards;position:relative;
-  filter:drop-shadow(0 0 30px rgba(var(--accent-rgb),.28)) drop-shadow(0 0 72px rgba(var(--accent-rgb),.12));
-  transition:filter var(--dur-mode) ease;
-}
-
-/* Dekorative Orbit-Ringe */
+.yy-arm{position:absolute;left:calc(var(--yy-size) / -2);top:calc(var(--yy-size)  / -2);}
+.yy-wrap{width:var(--yy-size);height:var(--yy-size);opacity:0;animation:fadeIn 1.2s 1s forwards;position:relative;filter:drop-shadow(0 0 30px rgba(var(--accent-rgb),.28)) drop-shadow(0 0 72px rgba(var(--accent-rgb),.12));transition:filter var(--dur-mode) ease;}
 .yy-ring-a,.yy-ring-b{position:absolute;border-radius:50%;pointer-events:none}
 .yy-ring-a{inset:-14px;border:1px solid rgba(var(--accent-rgb),.16);animation:ringPulse 3.5s ease-in-out infinite}
 .yy-ring-b{inset:-28px;border:1px dashed rgba(var(--accent-rgb),.07);animation:ringPulse 5.5s ease-in-out infinite reverse}
+#yySvg{width:100%;height:100%;overflow:visible;animation:yyFallback var(--dur-yy) linear infinite;will-change:transform;}
+#yySvg.js{animation:none}
+.yy-p{position:absolute;border-radius:50%;background:var(--text);pointer-events:none;animation:pOrbit linear infinite;transition:background var(--dur-mode) ease;}
+@keyframes pOrbit{from{transform:rotate(0deg) translateX(var(--r)) rotate(0deg);opacity:.55}50%{opacity:.22}to{transform:rotate(360deg) translateX(var(--r)) rotate(-360deg);opacity:.55}}
 
-/* SVG — Animation komplett via JS */
-#yySvg{
-  width:100%;height:100%;overflow:visible;
-  animation:yyFallback var(--dur-yy) linear infinite; /* CSS-Fallback ohne JS */
-  will-change:transform;
-}
-#yySvg.js{animation:none} /* JS übernimmt */
-
-/* Schwebende Partikel um das Yin-Yang */
-.yy-p{
-  position:absolute;border-radius:50%;background:var(--text);pointer-events:none;
-  animation:pOrbit linear infinite;transition:background var(--dur-mode) ease;
-}
-@keyframes pOrbit{
-  from{transform:rotate(0deg) translateX(var(--r)) rotate(0deg);opacity:.55}
-  50%{opacity:.22}
-  to{transform:rotate(360deg) translateX(var(--r)) rotate(-360deg);opacity:.55}
-}
-
-/* ════════════════════════════════════════════════════════════════════
-   §CSS-7  PROJEKTE — Glassmorphism
-   ════════════════════════════════════════════════════════════════════ */
 .proj-section{padding:8rem 2.5rem;max-width:1280px;margin:0 auto;position:relative;z-index:10}
 .section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4rem;gap:1.5rem}
 .section-label{display:flex;align-items:center;gap:1rem;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--subtle);flex:1;transition:color var(--dur-mode) ease}
 .section-label::after{content:'';flex:1;height:1px;background:var(--bdr);transition:background var(--dur-mode) ease}
-
 .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
-
-.proj-card{
-  background:var(--bg-glass);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));
-  border:1px solid var(--bdr);border-radius:var(--card-r);padding:2.25rem;
-  transition:border-color .35s,transform .35s,box-shadow .35s,background var(--dur-mode) ease;
-  position:relative;overflow:hidden;display:block;height:100%;text-decoration:none;
-}
+.proj-card{background:var(--bg-glass);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));border:1px solid var(--bdr);border-radius:var(--card-r);padding:2.25rem;transition:border-color .35s,transform .35s,box-shadow .35s,background var(--dur-mode) ease;position:relative;overflow:hidden;display:block;height:100%;text-decoration:none;}
 .proj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(var(--accent-rgb),.48),transparent);opacity:0;transition:opacity .35s}
 .proj-card::after{content:'';position:absolute;inset:0;border-radius:var(--card-r);background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(var(--accent-rgb),.07) 0%,transparent 60%);opacity:0;transition:opacity .35s;pointer-events:none}
 .proj-card:hover{border-color:var(--bdr-hover);transform:translateY(-6px);box-shadow:0 24px 64px rgba(0,0,0,.45),var(--glow-md)}
 .proj-card:hover::before{opacity:1}
 .proj-card:hover::after{opacity:1}
 .proj-card.featured{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;padding:3rem;border-radius:18px}
-
 .proj-num{font-size:10px;letter-spacing:.18em;color:var(--subtle);margin-bottom:1.75rem;transition:color var(--dur-mode) ease}
 .proj-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.1rem}
 .tag{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(var(--accent-rgb),.18);padding:2px 9px;border-radius:4px;transition:box-shadow .22s,background var(--dur-mode) ease}
 .proj-card:hover .tag{box-shadow:0 0 8px rgba(var(--accent-rgb),.25)}
 .proj-title{font-family:var(--fd);font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:.7rem;line-height:1.2;transition:color var(--dur-mode) ease}
 .proj-desc{color:var(--muted);font-size:13px;line-height:1.8;margin-bottom:1.2rem;transition:color var(--dur-mode) ease}
-
-/* Plattform-Buttons (Web / Android / iOS) */
 .plat-row{display:flex;flex-wrap:wrap;gap:.48rem;margin-bottom:1.5rem}
-.plat-btn{
-  display:inline-flex;align-items:center;gap:.42rem;font-size:11px;letter-spacing:.07em;
-  text-transform:uppercase;padding:5px 13px;border-radius:6px;text-decoration:none;
-  border:1px solid var(--bdr);color:var(--muted);background:rgba(255,255,255,.03);
-  transition:border-color .25s,color .25s,box-shadow .25s,background .25s;
-}
+.plat-btn{display:inline-flex;align-items:center;gap:.42rem;font-size:11px;letter-spacing:.07em;text-transform:uppercase;padding:5px 13px;border-radius:6px;text-decoration:none;border:1px solid var(--bdr);color:var(--muted);background:rgba(255,255,255,.03);transition:border-color .25s,color .25s,box-shadow .25s,background .25s;}
 .plat-btn:hover{border-color:var(--bdr-hover);color:var(--accent);background:var(--accent-dim);box-shadow:var(--glow-sm)}
 .plat-btn svg{width:13px;height:13px;fill:currentColor;flex-shrink:0}
-
 .proj-footer{display:flex;justify-content:space-between;align-items:center;padding-top:1.25rem;border-top:1px solid var(--bdr);transition:border-color var(--dur-mode) ease}
 .proj-year{font-size:11px;color:var(--subtle);transition:color var(--dur-mode) ease}
 .proj-arrow{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:.5rem;transition:gap .22s,text-shadow .22s}
 .proj-card:hover .proj-arrow{gap:.88rem;text-shadow:var(--glow-sm)}
-
-/* Code-Preview */
 .code-preview{background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:1.75rem;font-size:12px;line-height:1.9;align-self:center;color:var(--muted);backdrop-filter:blur(8px);transition:background var(--dur-mode) ease}
 :root[data-mode="light"] .code-preview{background:rgba(0,0,0,.07);border-color:rgba(0,0,0,.07)}
 .code-preview .kw{color:#C792EA}.code-preview .fn{color:var(--accent)}.code-preview .cm{color:var(--subtle)}
 .empty-state{grid-column:1/-1;text-align:center;padding:5rem 2rem;color:var(--subtle);font-size:13px;border:1px dashed rgba(255,255,255,.08);border-radius:12px}
 
-/* ════════════════════════════════════════════════════════════════════
-   §CSS-8  SKILLS + FOOTER
-   ════════════════════════════════════════════════════════════════════ */
 .skills-strip{border-top:1px solid var(--bdr);padding:2.5rem;display:flex;flex-wrap:wrap;gap:1.75rem;align-items:center;max-width:1280px;margin:0 auto;position:relative;z-index:10;transition:border-color var(--dur-mode) ease}
 .skills-label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--subtle);white-space:nowrap;transition:color var(--dur-mode) ease}
 .skill-pill{font-size:11px;color:var(--muted);padding:4px 14px;border:1px solid var(--bdr);border-radius:6px;background:rgba(255,255,255,.025);backdrop-filter:blur(6px);cursor:default;transition:border-color .22s,color .22s,box-shadow .22s,background .22s}
@@ -390,9 +229,6 @@ footer{border-top:1px solid var(--bdr);padding:2.5rem;display:flex;justify-conte
 footer a{color:var(--accent);text-decoration:none;transition:text-shadow .22s}
 footer a:hover{text-shadow:var(--glow-sm)}
 
-/* ════════════════════════════════════════════════════════════════════
-   §CSS-9  REVEAL + KEYFRAMES
-   ════════════════════════════════════════════════════════════════════ */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .75s ease,transform .75s ease}
 .reveal.visible{opacity:1;transform:none}
 
@@ -401,9 +237,6 @@ footer a:hover{text-shadow:var(--glow-sm)}
 @keyframes yyFallback{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @keyframes ringPulse{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.025)}}
 
-/* ════════════════════════════════════════════════════════════════════
-   §CSS-10  RESPONSIVE
-   ════════════════════════════════════════════════════════════════════ */
 @media(max-width:900px){
   nav{padding:0 1.5rem}
   .nav-links{display:none}
@@ -425,44 +258,21 @@ footer a:hover{text-shadow:var(--glow-sm)}
 }
 
 /* ════════════════════════════════════════════════════════════════════
-   ADMIN PANEL  —  wird im Export NICHT mitgeliefert
+   ADMIN PANEL
    ════════════════════════════════════════════════════════════════════ */
 /* ADMIN-CSS-START */
-#adminToggle{
-  position:fixed;bottom:1.6rem;right:1.6rem;z-index:9000;
-  width:46px;height:46px;border-radius:50%;background:var(--accent);
-  border:none;cursor:pointer;font-size:20px;display:flex;align-items:center;
-  justify-content:center;box-shadow:var(--glow-md);color:#fff;
-  transition:transform .22s,box-shadow .22s;
-}
+#adminToggle{position:fixed;bottom:1.6rem;right:1.6rem;z-index:9000;width:46px;height:46px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;box-shadow:var(--glow-md);color:#fff;transition:transform .22s,box-shadow .22s;}
 #adminToggle:hover{transform:scale(1.12);box-shadow:var(--glow-lg)}
 
-#adminPanel{
-  position:fixed;right:-420px;top:0;bottom:0;width:400px;z-index:8999;
-  background:var(--bg-nav);border-left:1px solid var(--bdr);
-  backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
-  display:flex;flex-direction:column;overflow:hidden;
-  transition:right .35s cubic-bezier(.4,0,.2,1);
-  box-shadow:-8px 0 40px rgba(0,0,0,.45);
-}
+#adminPanel{position:fixed;right:-420px;top:0;bottom:0;width:400px;z-index:8999;background:var(--bg-nav);border-left:1px solid var(--bdr);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);display:flex;flex-direction:column;overflow:hidden;transition:right .35s cubic-bezier(.4,0,.2,1);box-shadow:-8px 0 40px rgba(0,0,0,.45);}
 #adminPanel.open{right:0}
 
-.adm-header{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:1rem 1.25rem;border-bottom:1px solid var(--bdr);flex-shrink:0;
-  font-family:var(--fd);font-weight:800;font-size:.95rem;color:var(--accent);
-  text-shadow:var(--glow-sm);
-}
+.adm-header{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;border-bottom:1px solid var(--bdr);flex-shrink:0;font-family:var(--fd);font-weight:800;font-size:.95rem;color:var(--accent);text-shadow:var(--glow-sm);}
 .adm-close{background:none;border:none;cursor:pointer;font-size:18px;color:var(--muted);padding:4px 8px;border-radius:6px;transition:color .2s}
 .adm-close:hover{color:var(--accent)}
 
 .adm-tabs{display:flex;border-bottom:1px solid var(--bdr);flex-shrink:0;overflow-x:auto}
-.adm-tab{
-  flex:1;background:none;border:none;cursor:pointer;padding:9px 4px;
-  font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--muted);border-bottom:2px solid transparent;transition:color .2s,border-color .2s;
-  white-space:nowrap;
-}
+.adm-tab{flex:1;background:none;border:none;cursor:pointer;padding:9px 4px;font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:2px solid transparent;transition:color .2s,border-color .2s;white-space:nowrap;}
 .adm-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
 
 .adm-scroll{flex:1;overflow-y:auto;padding:1.1rem 1.25rem 1rem;display:flex;flex-direction:column;gap:.65rem}
@@ -471,76 +281,55 @@ footer a:hover{text-shadow:var(--glow-sm)}
 
 .adm-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--subtle);margin-top:.4rem}
 .adm-label:first-child{margin-top:0}
-.adm-input,.adm-textarea{
-  width:100%;background:rgba(255,255,255,.05);border:1px solid var(--bdr);
-  border-radius:7px;color:var(--text);font-family:var(--fm);font-size:12px;
-  padding:7px 10px;outline:none;transition:border-color .2s;resize:vertical;
-}
+.adm-input,.adm-textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--bdr);border-radius:7px;color:var(--text);font-family:var(--fm);font-size:12px;padding:7px 10px;outline:none;transition:border-color .2s;resize:vertical;}
 .adm-input:focus,.adm-textarea:focus{border-color:var(--accent);box-shadow:var(--glow-sm)}
 .adm-textarea{min-height:64px;line-height:1.6}
 :root[data-mode="light"] .adm-input,:root[data-mode="light"] .adm-textarea{background:rgba(0,0,0,.04)}
 
 .adm-lang-sw{display:flex;gap:.35rem;margin-bottom:.3rem}
-.adm-lbtn{background:none;border:1px solid var(--bdr);border-radius:6px;
-  cursor:pointer;padding:4px 12px;font-family:var(--fm);font-size:10px;
-  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);transition:all .18s}
+.adm-lbtn{background:none;border:1px solid var(--bdr);border-radius:6px;cursor:pointer;padding:4px 12px;font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);transition:all .18s}
 .adm-lbtn.active{background:var(--accent-dim);color:var(--accent);border-color:var(--accent-bdr)}
 
-.adm-actions{
-  padding:1rem 1.25rem;border-top:1px solid var(--bdr);display:flex;gap:.6rem;flex-shrink:0;
-}
-.adm-btn{
-  flex:1;padding:9px 8px;border-radius:8px;border:1px solid var(--bdr);
-  background:rgba(255,255,255,.04);color:var(--muted);font-family:var(--fm);
-  font-size:11px;letter-spacing:.07em;cursor:pointer;transition:all .22s;
-}
+.adm-actions{padding:1rem 1.25rem;border-top:1px solid var(--bdr);display:flex;gap:.6rem;flex-shrink:0;}
+.adm-btn{flex:1;padding:9px 8px;border-radius:8px;border:1px solid var(--bdr);background:rgba(255,255,255,.04);color:var(--muted);font-family:var(--fm);font-size:11px;letter-spacing:.07em;cursor:pointer;transition:all .22s;}
 .adm-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);box-shadow:var(--glow-sm)}
 .adm-btn.primary{background:var(--accent-dim);color:var(--accent);border-color:var(--accent-bdr)}
 .adm-btn.primary:hover{box-shadow:var(--glow-md)}
 
-/* Skill-Zeilen */
 .adm-skill-row{display:flex;gap:.4rem;align-items:center}
 .adm-skill-row .adm-input{flex:1}
-.adm-skill-del{background:none;border:1px solid var(--bdr);border-radius:6px;
-  color:var(--muted);cursor:pointer;width:30px;height:30px;font-size:14px;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s}
+.adm-skill-del{background:none;border:1px solid var(--bdr);border-radius:6px;color:var(--muted);cursor:pointer;width:30px;height:30px;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s}
 .adm-skill-del:hover{border-color:#e55;color:#e55}
 
-/* Projekt-Karten im Panel */
+/* ── Projekt-Karten ── */
 .adm-proj-item{border:1px solid var(--bdr);border-radius:9px;overflow:hidden}
-.adm-proj-head{
-  display:flex;align-items:center;gap:.6rem;padding:.7rem 1rem;
-  cursor:pointer;background:rgba(255,255,255,.03);transition:background .18s;
-}
+.adm-proj-head{display:flex;align-items:center;gap:.5rem;padding:.7rem 1rem;cursor:pointer;background:rgba(255,255,255,.03);transition:background .18s;}
 .adm-proj-head:hover{background:rgba(255,255,255,.06)}
 .adm-proj-head-title{flex:1;font-size:12px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.adm-proj-toggle{color:var(--muted);font-size:12px;transition:transform .22s}
+.adm-proj-toggle{color:var(--muted);font-size:12px;transition:transform .22s;flex-shrink:0}
 .adm-proj-toggle.open{transform:rotate(180deg)}
 .adm-proj-body{display:none;padding:.8rem 1rem;border-top:1px solid var(--bdr);flex-direction:column;gap:.55rem}
 .adm-proj-body.open{display:flex}
-.adm-proj-del{background:none;border:1px solid rgba(220,60,60,.3);border-radius:6px;
-  color:rgba(220,60,60,.7);cursor:pointer;font-size:11px;padding:5px 10px;
-  font-family:var(--fm);transition:all .18s;letter-spacing:.05em}
+.adm-proj-del{background:none;border:1px solid rgba(220,60,60,.3);border-radius:6px;color:rgba(220,60,60,.7);cursor:pointer;font-size:11px;padding:5px 10px;font-family:var(--fm);transition:all .18s;letter-spacing:.05em}
 .adm-proj-del:hover{border-color:#e55;color:#e55;background:rgba(220,60,60,.08)}
 .adm-proj-lang-sw{display:flex;gap:.3rem;margin-top:.2rem;flex-wrap:wrap}
-.adm-add-btn{
-  border:1px dashed var(--bdr);border-radius:8px;background:none;
-  color:var(--muted);cursor:pointer;font-family:var(--fm);font-size:11px;
-  letter-spacing:.07em;padding:8px;transition:all .22s;text-align:center;
-}
+.adm-add-btn{border:1px dashed var(--bdr);border-radius:8px;background:none;color:var(--muted);cursor:pointer;font-family:var(--fm);font-size:11px;letter-spacing:.07em;padding:8px;transition:all .22s;text-align:center;}
 .adm-add-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim)}
 
-/* Saved-Toast */
-#admToast{
-  position:fixed;bottom:5rem;right:1.6rem;z-index:9100;
-  background:var(--accent);color:#fff;font-family:var(--fm);font-size:12px;
-  padding:8px 18px;border-radius:8px;box-shadow:var(--glow-md);
-  opacity:0;transform:translateY(10px);pointer-events:none;
-  transition:opacity .3s,transform .3s;
+/* ── NEU: ↑↓ Sortier-Buttons ── */
+.adm-proj-move{
+  background:none;border:1px solid var(--bdr);border-radius:5px;
+  color:var(--muted);cursor:pointer;width:24px;height:24px;font-size:12px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  padding:0;line-height:1;font-family:var(--fm);
+  transition:border-color .18s,color .18s,box-shadow .18s;
 }
+.adm-proj-move:hover{border-color:var(--accent);color:var(--accent);box-shadow:var(--glow-sm)}
+.adm-proj-move:disabled{opacity:.22;cursor:default;pointer-events:none}
+
+#admToast{position:fixed;bottom:5rem;right:1.6rem;z-index:9100;background:var(--accent);color:#fff;font-family:var(--fm);font-size:12px;padding:8px 18px;border-radius:8px;box-shadow:var(--glow-md);opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .3s,transform .3s;}
 #admToast.show{opacity:1;transform:none}
 /* ADMIN-CSS-END */
-
 </style>
 </head>
 <body>
@@ -553,22 +342,16 @@ footer a:hover{text-shadow:var(--glow-sm)}
 <div class="orb orb-2"></div>
 <div class="orb orb-3"></div>
 
-<!-- ════════════════════════════════════════════════════════════════
-     NAVIGATION
-     ════════════════════════════════════════════════════════════════ -->
 <nav>
-  <!-- ✏ ANPASSEN: Logo -->
   <a href="#" class="nav-logo">Portfolio<span>.</span></a>
-
   <ul class="nav-links">
     <li><a href="#projekte" data-i="nav_proj"></a></li>
     <li><a href="#kontakt"  data-i="nav_contact"></a></li>
   </ul>
-
   <div class="nav-right">
     <div class="theme-sw" title="Farbthema">
-      <button class="th-dot active" data-color="teal"   style="background:#16a085" onclick="setColor('teal',this)"   title="Teal #16a085"></button>
-      <button class="th-dot"        data-color="sage"   style="background:#8F9790" onclick="setColor('sage',this)"   title="Sage #8F9790"></button>
+      <button class="th-dot active" data-color="teal"   style="background:#16a085" onclick="setColor('teal',this)"   title="Teal"></button>
+      <button class="th-dot"        data-color="sage"   style="background:#8F9790" onclick="setColor('sage',this)"   title="Sage"></button>
       <button class="th-dot"        data-color="mint"   style="background:#00E5A0" onclick="setColor('mint',this)"   title="Mint"></button>
       <button class="th-dot"        data-color="cosmic" style="background:#60A5FA" onclick="setColor('cosmic',this)" title="Cosmic Blue"></button>
       <button class="th-dot"        data-color="neon"   style="background:#A855F7" onclick="setColor('neon',this)"   title="Neon Purple"></button>
@@ -591,8 +374,6 @@ footer a:hover{text-shadow:var(--glow-sm)}
     <span>✏ Seiten-Editor</span>
     <button class="adm-close" onclick="toggleAdminPanel()">✕</button>
   </div>
-
-  <!-- Tabs -->
   <div class="adm-tabs">
     <button class="adm-tab active" onclick="admTab(this,'admGeneral')">Allgemein</button>
     <button class="adm-tab" onclick="admTab(this,'admHero')">Hero</button>
@@ -602,25 +383,22 @@ footer a:hover{text-shadow:var(--glow-sm)}
   </div>
 
   <div class="adm-scroll">
-
-    <!-- ── Tab: Allgemein ── -->
     <div id="admGeneral" class="adm-content active">
       <span class="adm-label">Browser-Tab Titel</span>
       <input class="adm-input" id="adm_pageTitle" oninput="document.title=this.value">
-      <span class="adm-label">Logo-Text (links in der Nav)</span>
+      <span class="adm-label">Logo-Text</span>
       <input class="adm-input" id="adm_logoText" oninput="admUpdateLogo()">
       <span class="adm-label">Meta-Beschreibung (SEO)</span>
       <input class="adm-input" id="adm_metaDesc" oninput="admUpdateMeta()">
     </div>
 
-    <!-- ── Tab: Hero ── -->
     <div id="admHero" class="adm-content">
       <div class="adm-lang-sw">
         <button class="adm-lbtn active" onclick="admHeroLang(this,'de')">DE</button>
         <button class="adm-lbtn" onclick="admHeroLang(this,'en')">EN</button>
         <button class="adm-lbtn" onclick="admHeroLang(this,'ar')">AR</button>
       </div>
-      <span class="adm-label">Hero-Tag (Untertitel)</span>
+      <span class="adm-label">Hero-Tag</span>
       <input class="adm-input" id="adm_heroTag" oninput="admSetT('hero_tag',this.value)">
       <span class="adm-label">Titelzeile 1</span>
       <input class="adm-input" id="adm_heroL0" oninput="admSetHeroLine(0,this.value)">
@@ -638,7 +416,7 @@ footer a:hover{text-shadow:var(--glow-sm)}
       <input class="adm-input" id="adm_navContact" oninput="admSetT('nav_contact',this.value);admRefreshNav()">
       <span class="adm-label">Scroll-Hinweis</span>
       <input class="adm-input" id="adm_scroll" oninput="admSetT('scroll',this.value)">
-      <span class="adm-label">Abschnitt-Label (z.B. 01 / Projekte)</span>
+      <span class="adm-label">Abschnitt-Label</span>
       <input class="adm-input" id="adm_sectionLbl" oninput="admSetT('section_lbl',this.value)">
       <span class="adm-label">Tech-Stack Label</span>
       <input class="adm-input" id="adm_techStack" oninput="admSetT('tech_stack',this.value)">
@@ -654,29 +432,24 @@ footer a:hover{text-shadow:var(--glow-sm)}
       <input class="adm-input" id="adm_platIos" oninput="admSetT('plat_ios',this.value)">
     </div>
 
-    <!-- ── Tab: Skills ── -->
     <div id="admSkills" class="adm-content">
       <div id="admSkillList"></div>
       <button class="adm-add-btn" onclick="admAddSkill()">+ Skill hinzufügen</button>
     </div>
 
-    <!-- ── Tab: Projekte ── -->
     <div id="admProjects" class="adm-content">
       <div id="admProjList"></div>
       <button class="adm-add-btn" onclick="admAddProject()">+ Projekt hinzufügen</button>
     </div>
 
-    <!-- ── Tab: Kontakt ── -->
     <div id="admContact" class="adm-content">
       <span class="adm-label">E-Mail-Adresse</span>
       <input class="adm-input" id="adm_email" oninput="admUpdateEmail()">
       <span class="adm-label">Copyright-Text</span>
       <input class="adm-input" id="adm_copyright" oninput="admUpdateCopyright()">
     </div>
+  </div>
 
-  </div><!-- /adm-scroll -->
-
-  <!-- Import / Export -->
   <div class="adm-actions">
     <input type="file" id="admImportFile" accept=".html" style="display:none" onchange="admImport(event)">
     <button class="adm-btn" onclick="document.getElementById('admImportFile').click()">📂 Import</button>
@@ -685,89 +458,33 @@ footer a:hover{text-shadow:var(--glow-sm)}
 </div>
 <!-- ADMIN-PANEL-END -->
 
-
-<!-- ════════════════════════════════════════════════════════════════
-     HERO
-     ════════════════════════════════════════════════════════════════ -->
 <div class="hero" id="hero">
   <div class="pl-grid" id="plGrid"></div>
-
-  <!-- ══════════════════════════════════════════════════════════════
-       YIN-YANG SVG
-       ──────────────────────────────────────────────────────────────
-       SVG viewBox: 0 0 310 310  |  <g translate(155,155)>
-       R=148  r=74  d=27
-
-       ① Dunkle Hälfte (Yin):
-          M 0,-148
-          A 74,74   0 0 1  0,  0    ← CW  kleiner Bogen → biegt RECHTS
-          A 74,74   0 0 0  0,148    ← CCW kleiner Bogen → biegt LINKS
-          A 148,148 0 0 1  0,-148   ← CW  großer Bogen  → linke Seite
-          Z
-
-       ② Helle Hälfte (Yang): gespiegeltes Vorzeichen (0↔1) im sweep-Flag
-
-       ③ Heller Punkt  cy=-74  in dunkler Hälfte ✓  (verifiziert)
-       ④ Dunkler Punkt cy=+74  in heller  Hälfte ✓  (verifiziert)
-          → Das ist der "dunkle Punkt im Weißen"
-
-       WARUM DER EFFEKT ENTSTEHT:
-         Drehung im Uhrzeigersinn → bei ~270° ist der dunkle Punkt links
-         → er bewegt sich NACH OBEN ↑
-         Der helle Punkt ist gleichzeitig rechts → bewegt sich NACH UNTEN ↓
-       ══════════════════════════════════════════════════════════════ -->
   <div class="yy-anchor" id="yyAnchor">
     <div class="yy-arm" id="yyArm">
       <div class="yy-wrap" id="yyWrap">
         <div class="yy-ring-a"></div>
         <div class="yy-ring-b"></div>
-
-
-<svg id="yySvg" viewBox="0 0 310 310" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-
-  <!-- *** NEU: clipPath ersetzt den fehlerhaften path *** -->
-  <defs>
-    <clipPath id="rightHalf">
-      <rect x="0" y="-148" width="148" height="296"/>
-    </clipPath>
-  </defs>
-  <!-- *** ENDE NEU *** -->
-
-  <g transform="translate(155,155)">
-
-    <!-- ① WEISSER HINTERGRUNDKREIS (Basis) -->
-    <circle r="148" fill="#ffffff"/>
-
-    <!-- ② DUNKLE HÄLFTE (rechts) -->
-    <!-- *** GEÄNDERT: <path> entfernt, clipPath verwendet *** -->
-    <circle r="148" fill="#000000" clip-path="url(#rightHalf)"/>
-    <!-- *** ENDE GEÄNDERT *** -->
-
-    <!-- ③ WEISSER HALBKREIS oben — erzeugt die S-Kurve korrekt -->
-    <circle cx="0" cy="-74" r="74" fill="#ffffff"/>
-
-    <!-- ④ SCHWARZER HALBKREIS unten — erzeugt die S-Kurve korrekt -->
-    <circle cx="0" cy="74" r="74" fill="#000000"/>
-
-    <!-- ⑤ SCHWARZER PUNKT in der WEISSEN Fläche (oben, cy=-74) -->
-    <circle id="dotDark" cx="0" cy="-74" r="25" fill="#000000"/>
-
-    <!-- ⑥ WEISSER PUNKT in der SCHWARZEN Fläche (unten, cy=+74) -->
-    <circle id="dotLight" cx="0" cy="74" r="25" fill="#ffffff"/>
-
-    <!-- ⑦ ÄUSSERER RAND -->
-    <circle r="147" fill="none" stroke="#000000" stroke-width="2.5"/>
-
-  </g>
-</svg>
-
-        <!-- Partikel werden per JS eingefügt -->
+        <svg id="yySvg" viewBox="0 0 310 310" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <clipPath id="rightHalf">
+              <rect x="0" y="-148" width="148" height="296"/>
+            </clipPath>
+          </defs>
+          <g transform="translate(155,155)">
+            <circle r="148" fill="#ffffff"/>
+            <circle r="148" fill="#000000" clip-path="url(#rightHalf)"/>
+            <circle cx="0" cy="-74" r="74" fill="#ffffff"/>
+            <circle cx="0" cy="74" r="74" fill="#000000"/>
+            <circle id="dotDark" cx="0" cy="-74" r="25" fill="#000000"/>
+            <circle id="dotLight" cx="0" cy="74" r="25" fill="#ffffff"/>
+            <circle r="147" fill="none" stroke="#000000" stroke-width="2.5"/>
+          </g>
+        </svg>
         <div id="yyPart"></div>
       </div>
     </div>
   </div>
-
-  <!-- ✏ ANPASSEN: Texte → JS §JS-2 TRANSLATIONS -->
   <p class="hero-tag"  data-i="hero_tag"></p>
   <h1 class="hero-title" id="heroTitle"></h1>
   <p class="hero-desc" data-i="hero_desc"></p>
@@ -775,9 +492,6 @@ footer a:hover{text-shadow:var(--glow-sm)}
   <span class="scroll-hint" data-i="scroll"></span>
 </div>
 
-<!-- ════════════════════════════════════════════════════════════════
-     PROJEKTE
-     ════════════════════════════════════════════════════════════════ -->
 <section class="proj-section" id="projekte">
   <div class="section-header">
     <div class="section-label"><span data-i="section_lbl"></span></div>
@@ -785,9 +499,6 @@ footer a:hover{text-shadow:var(--glow-sm)}
   <div class="projects-grid" id="grid"></div>
 </section>
 
-<!-- ════════════════════════════════════════════════════════════════
-     SKILLS   ✏ ANPASSEN SKILLS: Pills hier direkt ändern
-     ════════════════════════════════════════════════════════════════ -->
 <div class="skills-strip">
   <span class="skills-label" data-i="tech_stack"></span>
   <span class="skill-pill">JavaScript</span>
@@ -802,31 +513,19 @@ footer a:hover{text-shadow:var(--glow-sm)}
   <span class="skill-pill">Git</span>
 </div>
 
-<!-- ════════════════════════════════════════════════════════════════
-     FOOTER / KONTAKT   ✏ ANPASSEN KONTAKT
-     ════════════════════════════════════════════════════════════════ -->
 <footer id="kontakt">
   <div>
     <span data-i="contact_ready"></span>
     · <a href="mailto:deine@email.de">deine@email.de</a>
   </div>
-  <!-- ✏ ANPASSEN: Copyright -->
   <div>© 2025 [Dein Name]</div>
 </footer>
 
-
-<!-- ════════════════════════════════════════════════════════════════
-     JAVASCRIPT
-     ════════════════════════════════════════════════════════════════ -->
 <script>
 'use strict';
 
-/* ═══════════════════════════════════════════════════════════════════
-   §JS-1  HELFER
-   ═══════════════════════════════════════════════════════════════════ */
 const lerp = (a,b,t) => a+(b-a)*t;
 
-/** SVG-Inline-Icons für Plattform-Buttons */
 const ICONS = {
   web:     `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`,
   android: `<svg viewBox="0 0 24 24"><path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5S11 23.33 11 22.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zM3.5 8C2.67 8 2 8.67 2 9.5v7c0 .83.67 1.5 1.5 1.5S5 17.33 5 16.5v-7C5 8.67 4.33 8 3.5 8zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zM15.53 2.16l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48C13.85 1.23 12.95 1 12 1c-.96 0-1.86.23-2.66.63L7.85.15c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l1.31 1.31C7.15 3.07 6 4.9 6 7h12c0-2.1-1.15-3.93-2.47-4.84zM10 5H9V4h1v1zm5 0h-1V4h1v1z"/></svg>`,
@@ -834,21 +533,20 @@ const ICONS = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════
-   §JS-2  TRANSLATIONS
-   ✏ ANPASSEN TEXTE: Alle Texte von "Portfolio" bis "deine@email.de"
+   §JS-2  TRANSLATIONS  ✏ ANPASSEN
    ═══════════════════════════════════════════════════════════════════ */
 const T = {
   de: {
     dir:'ltr',
     nav_proj:'Projekte', nav_contact:'Kontakt',
-    /* ✏ */ hero_tag:   'Software Developer · Frankfurt am Main',
-    /* ✏ */ hero_lines: ['Ich baue','digitale Lösungen','die wirken.'],
+    hero_tag:   'Software Developer · Frankfurt am Main',
+    hero_lines: ['Ich baue','digitale Lösungen','die wirken.'],
     hero_dim:2, hero_glow:1,
-    /* ✏ */ hero_desc:  'Full-Stack Entwickler mit Fokus auf saubere Architektur, performante Systeme und nutzerzentriertes Design. Offen für neue Projekte.',
-    /* ✏ */ hero_cta:   'Projekte ansehen →',
+    hero_desc:  'Full-Stack Entwickler mit Fokus auf saubere Architektur, performante Systeme und nutzerzentriertes Design. Offen für neue Projekte.',
+    hero_cta:   'Projekte ansehen →',
     section_lbl:'01 / Projekte',
     tech_stack:'Tech Stack',
-    /* ✏ */ contact_ready:'Bereit für neue Projekte',
+    contact_ready:'Bereit für neue Projekte',
     proj_link:'Zum Projekt', scroll:'scroll',
     plat_web:'Web', plat_android:'Google Play', plat_ios:'App Store',
   },
@@ -883,23 +581,13 @@ const T = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════
-   §JS-3  PROJECTS DATA
-   ✏ ANPASSEN PROJEKTE
-   ─────────────────────────────────────────────────────────────────
-   links.web     →  URL der Web-Version  (weglassen = kein Button)
-   links.android →  https://play.google.com/store/apps/details?id=…
-   links.ios     →  https://apps.apple.com/app/id…
-   featured:true →  große Karte (nur 1 empfohlen)
+   §JS-3  PROJECTS  ✏ ANPASSEN
    ═══════════════════════════════════════════════════════════════════ */
 const PROJECTS = [
   {
     id:'p1', featured:true, year:2024,
     tags:['React','Node.js','PostgreSQL','ML'],
-    links:{
-      web:     '#',                /* ✏ https://deine-seite.de           */
-      android: '#',                /* ✏ https://play.google.com/…        */
-      ios:     '#',                /* ✏ https://apps.apple.com/…         */
-    },
+    links:{ web:'#', android:'#', ios:'#' },
     title:{ de:'E-Commerce Platform mit KI-Empfehlungen', en:'E-Commerce Platform with AI Recommendations', ar:'منصة تجارة إلكترونية بالذكاء الاصطناعي' },
     desc:{ de:'Skalierbare Handelsplattform mit ML-Empfehlungen. 50.000+ Produkte, 10.000 tägliche Nutzer. Ladezeit um 60 % reduziert.', en:'Scalable commerce platform with ML recommendations. 50,000+ products, 10,000 daily users. 60% faster load times.', ar:'منصة تجارية بتوصيات ذكاء اصطناعي. أكثر من 50,000 منتج.' },
   },
@@ -927,13 +615,12 @@ const PROJECTS = [
 ];
 
 /* ═══════════════════════════════════════════════════════════════════
-   §JS-4  THEME / MODE / LANGUAGE  — mit localStorage-Persistenz
+   §JS-4  THEME / MODE / LANGUAGE
    ═══════════════════════════════════════════════════════════════════ */
 let LANG = localStorage.getItem('pf_lang') || 'de';
 let MODE = localStorage.getItem('pf_mode') || 'auto';
 let COLOR= localStorage.getItem('pf_color')|| 'teal';
 
-/* Gespeicherte Einstellungen sofort anwenden (verhindert Flackern) */
 (function applyStored(){
   const r = document.documentElement;
   r.setAttribute('data-color', COLOR);
@@ -943,11 +630,10 @@ let COLOR= localStorage.getItem('pf_color')|| 'teal';
 })();
 
 function setColor(c, btn) {
-  COLOR = c;
-  localStorage.setItem('pf_color', c);
+  COLOR = c; localStorage.setItem('pf_color', c);
   document.documentElement.setAttribute('data-color', c);
   document.querySelectorAll('.th-dot').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
+  if(btn) btn.classList.add('active');
   else document.querySelector(`.th-dot[data-color="${c}"]`)?.classList.add('active');
 }
 
@@ -960,25 +646,19 @@ function toggleMode() {
 }
 
 function setLang(l) {
-  LANG = l;
-  localStorage.setItem('pf_lang', l);
+  LANG = l; localStorage.setItem('pf_lang', l);
   const t = T[l];
   document.documentElement.setAttribute('lang', l);
   document.documentElement.setAttribute('dir', t.dir);
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent === l.toUpperCase()));
-
-  /* Hero-Titel */
   document.getElementById('heroTitle').innerHTML = t.hero_lines.map((ln, i) => {
-    if (i === t.hero_dim)  return `<span class="dim">${ln}</span>`;
-    if (i === t.hero_glow) return `<span class="hi">${ln}</span>`;
+    if(i === t.hero_dim)  return `<span class="dim">${ln}</span>`;
+    if(i === t.hero_glow) return `<span class="hi">${ln}</span>`;
     return `<span>${ln}</span>`;
   }).join('<br>');
-
-  /* data-i Attribute */
   document.querySelectorAll('[data-i]').forEach(el => {
-    const k = el.dataset.i; if (t[k] !== undefined) el.textContent = t[k];
+    const k = el.dataset.i; if(t[k] !== undefined) el.textContent = t[k];
   });
-
   renderGrid();
 }
 
@@ -988,7 +668,7 @@ function setLang(l) {
 function renderGrid() {
   const t = T[LANG], grid = document.getElementById('grid');
   grid.innerHTML = '';
-  if (!PROJECTS.length) { grid.innerHTML='<div class="empty-state">Noch keine Projekte.</div>'; return; }
+  if(!PROJECTS.length){ grid.innerHTML='<div class="empty-state">Noch keine Projekte.</div>'; return; }
 
   PROJECTS.forEach((p, idx) => {
     const num   = String(idx + 1).padStart(2, '0');
@@ -996,19 +676,17 @@ function renderGrid() {
     const desc  = p.desc[LANG]  || p.desc.de;
     const tags  = (p.tags||[]).map(g=>`<span class="tag">${g}</span>`).join('');
 
-    /* Plattform-Buttons */
     let plats = '';
-    if (p.links) {
-      if (p.links.web)     plats += `<a href="${p.links.web}"     class="plat-btn" target="_blank" rel="noopener">${ICONS.web}${t.plat_web}</a>`;
-      if (p.links.android) plats += `<a href="${p.links.android}" class="plat-btn" target="_blank" rel="noopener">${ICONS.android}${t.plat_android}</a>`;
-      if (p.links.ios)     plats += `<a href="${p.links.ios}"     class="plat-btn" target="_blank" rel="noopener">${ICONS.ios}${t.plat_ios}</a>`;
+    if(p.links){
+      if(p.links.web)     plats += `<a href="${p.links.web}"     class="plat-btn" target="_blank" rel="noopener">${ICONS.web}${t.plat_web}</a>`;
+      if(p.links.android) plats += `<a href="${p.links.android}" class="plat-btn" target="_blank" rel="noopener">${ICONS.android}${t.plat_android}</a>`;
+      if(p.links.ios)     plats += `<a href="${p.links.ios}"     class="plat-btn" target="_blank" rel="noopener">${ICONS.ios}${t.plat_ios}</a>`;
     }
     const platHtml = plats ? `<div class="plat-row">${plats}</div>` : '';
-
     const isFeat = !!p.featured;
     const wrap = document.createElement('div');
     wrap.className = 'card-wrap reveal';
-    if (isFeat) wrap.style.gridColumn = '1/-1';
+    if(isFeat) wrap.style.gridColumn = '1/-1';
 
     const body = isFeat
       ? `<div>
@@ -1045,62 +723,28 @@ function renderGrid() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   §JS-6  YIN-YANG  ORGANISCHE ANIMATION
-   ═══════════════════════════════════════════════════════════════════
-   Drei überlagerte Mechanismen erzeugen den organischen Effekt:
-
-   A) SPIN   — Sinusförmige Geschwindigkeitsvariation (±15 %)
-               → nie gleichmäßig-mechanisch, immer lebendig
-
-   B) TILT   — Langsame 3D-Neigung (rotateX + rotateZ)
-               → flache Scheibe bekommt Tiefe und Volumen
-
-   C) ORBIT  — Das ganze Element bewegt sich auf einer Ellipse
-               → subtiles kosmisches Schweben
-
-   D) MAUS   — Mausgeschwindigkeit beschleunigt kurz den Spin
-
-   WARUM DER PUNKT-EFFEKT ENTSTEHT:
-     Dunkler Punkt (cy=+74) dreht im Uhrzeigersinn:
-       0°  → unten       (6 Uhr)
-       90° → rechts      (3 Uhr)
-      180° → oben        (12 Uhr)
-      270° → LINKS       ← hier BEWEGT ER SICH NACH OBEN ↑
-     Heller Punkt (cy=-74) ist immer gegenüber:
-      270° → rechts      ← hier BEWEGT ER SICH NACH UNTEN ↓
+   §JS-6  YIN-YANG ANIMATION
    ═══════════════════════════════════════════════════════════════════ */
 (function yyInit() {
   const svg  = document.getElementById('yySvg');
   const arm  = document.getElementById('yyArm');
   const part = document.getElementById('yyPart');
-  if (!svg || !arm) return;
+  if(!svg || !arm) return;
+  svg.classList.add('js');
 
-  svg.classList.add('js'); // CSS-Fallback abschalten
-
-  /* ── A) Spin ──────────────────────────────────────── */
-  /* ✏ ANPASSEN: YY_SEC = Sekunden pro Umdrehung */
   const YY_SEC   = 18;
-  const BASE_SPD = 360 / (YY_SEC * 60); // °/Frame @ 60fps
+  const BASE_SPD = 360 / (YY_SEC * 60);
   let   angle    = 0;
-
-  /* ── B) Tilt-Amplituden (Grad) ─────────────────────── */
-  /* ✏ ANPASSEN: Größere Werte = stärkere Neigung */
   const TX = 9, TZ = 4;
-
-  /* ── C) Orbit ─────────────────────────────────────── */
-  /* ✏ ANPASSEN: RX/RY = Orbit-Radien in px */
   const RX = 55, RY = 42, OSPD = 0.20;
   let   oa = 0, scrollOy = 0;
-
-  /* ── D) Maus ──────────────────────────────────────── */
   let mvel=0, lx=0, ly=0;
   document.addEventListener('mousemove', e=>{
     mvel = Math.min(Math.hypot(e.clientX-lx, e.clientY-ly), 80)/80;
     lx=e.clientX; ly=e.clientY;
   });
 
-  /* Partikel */
-  for (let i=0; i<16; i++) {
+  for(let i=0; i<16; i++){
     const p = document.createElement('div');
     p.className = 'yy-p';
     const sz  = (Math.random()*2.8+.8).toFixed(1)+'px';
@@ -1113,37 +757,22 @@ function renderGrid() {
 
   window.addEventListener('scroll', ()=>{ scrollOy = scrollY * 0.18; });
 
-  /* Render-Loop */
   let lastTs = 0;
   function frame(ts) {
     const dt = Math.min(ts-lastTs, 50); lastTs = ts;
-
-    /* Maus-Boost abklingen */
     mvel *= 0.88;
-
-    /* A) Spin: Basis + Sinus-Variation + Maus-Boost */
     const speedMod = 1 + 0.15 * Math.sin(ts/4200);
     const boost    = 1 + mvel * 3.2;
     angle += BASE_SPD * speedMod * boost * (dt/16.67);
-
-    /* B) 3D-Tilt */
     const tx = TX * Math.sin(ts/5000);
     const tz = TZ * Math.sin(ts/7200 + 1.3);
-
-    /* Atem-Skalierung */
     const sc = 1 + 0.018 * Math.sin(ts/3400);
-
-    /* SVG-Transform */
-    svg.style.transform =
-      `perspective(900px) rotate(${angle}deg) rotateX(${tx}deg) rotateZ(${tz}deg) scale(${sc})`;
-
-    /* C) Orbit */
+    svg.style.transform = `perspective(900px) rotate(${angle}deg) rotateX(${tx}deg) rotateZ(${tz}deg) scale(${sc})`;
     oa += OSPD * (dt/16.67);
     const rad = oa * Math.PI/180;
     const ox = Math.cos(rad)*RX;
     const oy = Math.sin(rad)*RY + scrollOy;
     arm.style.transform = `translate(${ox}px, calc(-50% + ${oy}px))`;
-
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
@@ -1151,17 +780,11 @@ function renderGrid() {
 
 /* ═══════════════════════════════════════════════════════════════════
    §JS-7  GALAXY STARFIELD
-   Drei Ebenen: Sterne (twinkeln) · Nebel-Partikel · Sternschnuppen
    ═══════════════════════════════════════════════════════════════════ */
 (function initStars() {
   const cv=document.getElementById('starfield'), ctx=cv.getContext('2d');
   let W,H,stars=[],nebs=[],shoots=[];
-
-  const isLight=()=>{
-    const m=document.documentElement.getAttribute('data-mode');
-    return m==='light'||(m==='auto'&&matchMedia('(prefers-color-scheme:light)').matches);
-  };
-
+  const isLight=()=>{ const m=document.documentElement.getAttribute('data-mode'); return m==='light'||(m==='auto'&&matchMedia('(prefers-color-scheme:light)').matches); };
   function build(){
     stars=[]; nebs=[];
     const n=Math.floor(W*H/2800);
@@ -1169,37 +792,15 @@ function renderGrid() {
     const cols=['rgba(22,160,133,','rgba(60,120,255,','rgba(180,40,255,','rgba(0,200,160,'];
     for(let i=0;i<8;i++) nebs.push({x:Math.random()*W,y:Math.random()*H,r:65+Math.random()*120,col:cols[i%cols.length],a:.04+Math.random()*.07,dx:(Math.random()-.5)*.18,dy:(Math.random()-.5)*.12});
   }
-
   let f=0;
   function draw(){
     ctx.clearRect(0,0,W,H); f++;
     const lt=isLight();
-    if(!lt){
-      nebs.forEach(n=>{
-        const g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r);
-        g.addColorStop(0,n.col+n.a+')'); g.addColorStop(1,n.col+'0)');
-        ctx.fillStyle=g; ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2); ctx.fill();
-        n.x+=n.dx; n.y+=n.dy;
-        if(n.x<-n.r)n.x=W+n.r; if(n.x>W+n.r)n.x=-n.r;
-        if(n.y<-n.r)n.y=H+n.r; if(n.y>H+n.r)n.y=-n.r;
-      });
-    }
-    stars.forEach(s=>{
-      const tw=.5+.5*Math.sin(f*s.spd+s.tw);
-      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-      ctx.fillStyle=lt?`rgba(30,50,100,${s.a*tw*.38})`:`rgba(255,255,255,${s.a*tw})`;
-      ctx.fill();
-      s.y-=s.dy*.1; if(s.y<-2)s.y=H+2;
-    });
+    if(!lt){ nebs.forEach(n=>{ const g=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r); g.addColorStop(0,n.col+n.a+')'); g.addColorStop(1,n.col+'0)'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2); ctx.fill(); n.x+=n.dx; n.y+=n.dy; if(n.x<-n.r)n.x=W+n.r; if(n.x>W+n.r)n.x=-n.r; if(n.y<-n.r)n.y=H+n.r; if(n.y>H+n.r)n.y=-n.r; }); }
+    stars.forEach(s=>{ const tw=.5+.5*Math.sin(f*s.spd+s.tw); ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fillStyle=lt?`rgba(30,50,100,${s.a*tw*.38})`:`rgba(255,255,255,${s.a*tw})`; ctx.fill(); s.y-=s.dy*.1; if(s.y<-2)s.y=H+2; });
     if(!lt&&Math.random()<.004) shoots.push({x:Math.random()*W,y:Math.random()*H*.5,len:80+Math.random()*120,spd:6+Math.random()*8,life:1,ang:Math.PI/5+Math.random()*.28});
     shoots=shoots.filter(s=>s.life>0);
-    shoots.forEach(s=>{
-      const ex=s.x+Math.cos(s.ang)*s.len*s.life,ey=s.y+Math.sin(s.ang)*s.len*s.life;
-      const g=ctx.createLinearGradient(s.x,s.y,ex,ey);
-      g.addColorStop(0,'rgba(255,255,255,0)'); g.addColorStop(1,`rgba(255,255,255,${s.life*.8})`);
-      ctx.strokeStyle=g; ctx.lineWidth=1.4; ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(ex,ey); ctx.stroke();
-      s.x+=Math.cos(s.ang)*s.spd; s.y+=Math.sin(s.ang)*s.spd; s.life-=.018;
-    });
+    shoots.forEach(s=>{ const ex=s.x+Math.cos(s.ang)*s.len*s.life,ey=s.y+Math.sin(s.ang)*s.len*s.life; const g=ctx.createLinearGradient(s.x,s.y,ex,ey); g.addColorStop(0,'rgba(255,255,255,0)'); g.addColorStop(1,`rgba(255,255,255,${s.life*.8})`); ctx.strokeStyle=g; ctx.lineWidth=1.4; ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(ex,ey); ctx.stroke(); s.x+=Math.cos(s.ang)*s.spd; s.y+=Math.sin(s.ang)*s.spd; s.life-=.018; });
     requestAnimationFrame(draw);
   }
   function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight;build();}
@@ -1208,98 +809,50 @@ function renderGrid() {
 })();
 
 /* ═══════════════════════════════════════════════════════════════════
-   §JS-8  CUSTOM CURSOR — Leuchtpur + Ripple + flexible Reaktion
+   §JS-8  CUSTOM CURSOR
    ═══════════════════════════════════════════════════════════════════ */
 (function(){
-  const dot  = document.getElementById('cdot');
-  const ring = document.getElementById('cring');
+  const dot=document.getElementById('cdot'), ring=document.getElementById('cring');
   if(!dot) return;
-
-  /* ── Trail-Punkte erzeugen ── */
-  const TRAIL_N = 9;
-  const trail   = [];
-  for(let i = 0; i < TRAIL_N; i++){
-    const t = document.createElement('div');
-    t.className = 'cursor-trail';
-    const frac = (i + 1) / TRAIL_N;          /* 0.11 … 1 */
-    t.style.cssText = `
-      width:${(5 - frac * 2.8).toFixed(1)}px;
-      height:${(5 - frac * 2.8).toFixed(1)}px;
-      opacity:${(0.55 - frac * 0.48).toFixed(2)};
-    `;
-    document.body.appendChild(t);
-    trail.push({ el: t, x: -100, y: -100 });
+  const TRAIL_N=9, trail=[];
+  for(let i=0;i<TRAIL_N;i++){
+    const t=document.createElement('div'); t.className='cursor-trail';
+    const frac=(i+1)/TRAIL_N;
+    t.style.cssText=`width:${(5-frac*2.8).toFixed(1)}px;height:${(5-frac*2.8).toFixed(1)}px;opacity:${(0.55-frac*0.48).toFixed(2)};`;
+    document.body.appendChild(t); trail.push({el:t,x:-100,y:-100});
   }
-
-  /* ── Zustand ── */
-  let mx = -200, my = -200;
-  let rx = -200, ry = -200;
-  /* Trail-Positionen als Ringpuffer */
-  const hist = Array.from({length: TRAIL_N * 3 + 4}, () => ({x:-200,y:-200}));
-  let hIdx = 0;
-
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    dot.style.left = mx + 'px';
-    dot.style.top  = my + 'px';
-    /* Aktuelle Position in Verlauf schreiben */
-    hist[hIdx % hist.length] = {x: mx, y: my};
-    hIdx++;
+  let mx=-200,my=-200,rx=-200,ry=-200;
+  const hist=Array.from({length:TRAIL_N*3+4},()=>({x:-200,y:-200}));
+  let hIdx=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    dot.style.left=mx+'px';dot.style.top=my+'px';
+    hist[hIdx%hist.length]={x:mx,y:my};hIdx++;
   });
-
-  /* ── Klick-Ripple ── */
-  document.addEventListener('click', e => {
-    const r = document.createElement('div');
-    r.className = 'cursor-ripple';
-    r.style.left   = e.clientX + 'px';
-    r.style.top    = e.clientY + 'px';
-    r.style.width  = '40px';
-    r.style.height = '40px';
-    document.body.appendChild(r);
-    setTimeout(() => r.remove(), 600);
+  document.addEventListener('click',e=>{
+    const r=document.createElement('div');r.className='cursor-ripple';
+    r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';r.style.width='40px';r.style.height='40px';
+    document.body.appendChild(r);setTimeout(()=>r.remove(),600);
   });
-
-  /* ── Interaktive Elemente ── */
-  document.querySelectorAll('a,button,.proj-card,.skill-pill,.th-dot,.lang-btn,.plat-btn').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      dot.style.width  = '16px';
-      dot.style.height = '16px';
-      ring.style.width  = '58px';
-      ring.style.height = '58px';
-      ring.style.borderColor = `rgba(var(--accent-rgb),.95)`;
-    });
-    el.addEventListener('mouseleave', () => {
-      dot.style.width  = '10px';
-      dot.style.height = '10px';
-      ring.style.width  = '40px';
-      ring.style.height = '40px';
-      ring.style.borderColor = `rgba(var(--accent-rgb),.72)`;
-    });
+  document.querySelectorAll('a,button,.proj-card,.skill-pill,.th-dot,.lang-btn,.plat-btn').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{dot.style.width='16px';dot.style.height='16px';ring.style.width='58px';ring.style.height='58px';ring.style.borderColor=`rgba(var(--accent-rgb),.95)`;});
+    el.addEventListener('mouseleave',()=>{dot.style.width='10px';dot.style.height='10px';ring.style.width='40px';ring.style.height='40px';ring.style.borderColor=`rgba(var(--accent-rgb),.72)`;});
   });
-
-  /* ── Render-Loop ── */
   (function loop(){
-    /* Ring folgt mit sanftem Lerp */
-    rx = lerp(rx, mx, 0.15);
-    ry = lerp(ry, my, 0.15);
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
-
-    /* Trail-Punkte aus Verlauf-Puffer */
-    for(let i = 0; i < TRAIL_N; i++){
-      const age = (i + 1) * 3;            /* je weiter hinten, desto älter */
-      const idx = ((hIdx - age) % hist.length + hist.length) % hist.length;
-      const pos = hist[idx];
-      trail[i].el.style.left = pos.x + 'px';
-      trail[i].el.style.top  = pos.y + 'px';
+    rx=lerp(rx,mx,0.15);ry=lerp(ry,my,0.15);
+    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    for(let i=0;i<TRAIL_N;i++){
+      const age=(i+1)*3;
+      const idx=((hIdx-age)%hist.length+hist.length)%hist.length;
+      const pos=hist[idx];
+      trail[i].el.style.left=pos.x+'px';trail[i].el.style.top=pos.y+'px';
     }
-
     requestAnimationFrame(loop);
   })();
 })();
 
 /* ═══════════════════════════════════════════════════════════════════
-   §JS-9  SCROLL  —  Progress + Parallax-Gitter
+   §JS-9  SCROLL
    ═══════════════════════════════════════════════════════════════════ */
 window.addEventListener('scroll',()=>{
   document.getElementById('scroll-prog').style.width=(scrollY/(document.body.scrollHeight-innerHeight)*100)+'%';
@@ -1331,18 +884,15 @@ setInterval(obAll,600);
 document.getElementById('modeBtn').textContent =
   matchMedia('(prefers-color-scheme:dark)').matches ? '🌙' : '☀';
 
-
 /* ═══════════════════════════════════════════════════════════════════
-   ADMIN PANEL JS  —  wird im Export NICHT mitgeliefert
+   ADMIN PANEL JS
 /* ADMIN-JS-START */
 (function initAdmin(){
 
-  /* ── Panel-Toggle ──────────────────────────────────────────────── */
   window.toggleAdminPanel = function(){
     document.getElementById('adminPanel').classList.toggle('open');
   };
 
-  /* ── Tab-Switcher ──────────────────────────────────────────────── */
   window.admTab = function(btn, id){
     document.querySelectorAll('.adm-tab').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
@@ -1350,7 +900,6 @@ document.getElementById('modeBtn').textContent =
     document.getElementById(id).classList.add('active');
   };
 
-  /* ── Aktive Bearbeitungssprache im Hero-Tab ────────────────────── */
   let admHL = 'de';
   window.admHeroLang = function(btn, l){
     document.querySelectorAll('.adm-lbtn').forEach(b=>b.classList.remove('active'));
@@ -1359,48 +908,44 @@ document.getElementById('modeBtn').textContent =
     admPopulateHero();
   };
 
-  /* ── Logo / Meta aktualisieren ─────────────────────────────────── */
   window.admUpdateLogo = function(){
-    const v = document.getElementById('adm_logoText').value;
-    const logo = document.querySelector('.nav-logo');
-    if(logo){ logo.childNodes[0].textContent = v; }
+    const v=document.getElementById('adm_logoText').value;
+    const logo=document.querySelector('.nav-logo');
+    if(logo){ logo.childNodes[0].textContent=v; }
   };
   window.admUpdateMeta = function(){
-    const v = document.getElementById('adm_metaDesc').value;
-    let m = document.querySelector('meta[name="description"]');
-    if(m) m.setAttribute('content', v);
+    const v=document.getElementById('adm_metaDesc').value;
+    let m=document.querySelector('meta[name="description"]');
+    if(m) m.setAttribute('content',v);
   };
 
-  /* ── T-Objekt live aktualisieren ───────────────────────────────── */
   window.admSetT = function(key, val){
-    T[admHL][key] = val;
-    setLang(LANG); // re-render alles
+    T[admHL][key]=val;
+    setLang(LANG);
   };
   window.admSetHeroLine = function(idx, val){
-    T[admHL].hero_lines[idx] = val;
+    T[admHL].hero_lines[idx]=val;
     setLang(LANG);
   };
   window.admRefreshNav = function(){
-    const t = T[LANG];
+    const t=T[LANG];
     document.querySelector('[data-i="nav_proj"]').textContent  = t.nav_proj;
     document.querySelector('[data-i="nav_contact"]').textContent = t.nav_contact;
   };
 
-  /* ── E-Mail / Copyright ─────────────────────────────────────────── */
   window.admUpdateEmail = function(){
-    const v = document.getElementById('adm_email').value;
-    const a = document.querySelector('footer a[href^="mailto"]');
+    const v=document.getElementById('adm_email').value;
+    const a=document.querySelector('footer a[href^="mailto"]');
     if(a){ a.href='mailto:'+v; a.textContent=v; }
   };
   window.admUpdateCopyright = function(){
-    const v = document.getElementById('adm_copyright').value;
-    const el = document.querySelector('footer > div:last-child');
-    if(el) el.textContent = v;
+    const v=document.getElementById('adm_copyright').value;
+    const el=document.querySelector('footer > div:last-child');
+    if(el) el.textContent=v;
   };
 
-  /* ── Hero-Tab befüllen ─────────────────────────────────────────── */
   function admPopulateHero(){
-    const t = T[admHL];
+    const t=T[admHL]||T['de'];
     document.getElementById('adm_heroTag').value    = t.hero_tag     || '';
     document.getElementById('adm_heroL0').value     = (t.hero_lines||[])[0] || '';
     document.getElementById('adm_heroL1').value     = (t.hero_lines||[])[1] || '';
@@ -1419,46 +964,41 @@ document.getElementById('modeBtn').textContent =
     document.getElementById('adm_platIos').value    = t.plat_ios     || '';
   }
 
-  /* ── Skills ─────────────────────────────────────────────────────── */
+  /* ── Skills ── */
   function admRenderSkills(){
-    const list = document.getElementById('admSkillList');
-    const pills = [...document.querySelectorAll('.skill-pill')];
-    list.innerHTML = '';
-    pills.forEach((pill, i)=>{
-      const row = document.createElement('div');
-      row.className = 'adm-skill-row';
-      row.innerHTML = `<input class="adm-input" value="${pill.textContent}" oninput="admUpdateSkill(${i},this.value)">
+    const list=document.getElementById('admSkillList');
+    const pills=[...document.querySelectorAll('.skill-pill')];
+    list.innerHTML='';
+    pills.forEach((pill,i)=>{
+      const row=document.createElement('div'); row.className='adm-skill-row';
+      row.innerHTML=`<input class="adm-input" value="${pill.textContent}" oninput="admUpdateSkill(${i},this.value)">
         <button class="adm-skill-del" onclick="admDeleteSkill(${i})" title="Löschen">✕</button>`;
       list.appendChild(row);
     });
   }
-  window.admUpdateSkill = function(i, val){
-    const pills = document.querySelectorAll('.skill-pill');
-    if(pills[i]) pills[i].textContent = val;
-  };
-  window.admDeleteSkill = function(i){
-    const pills = document.querySelectorAll('.skill-pill');
-    if(pills[i]) pills[i].remove();
-    admRenderSkills();
-  };
+  window.admUpdateSkill = function(i,val){ const pills=document.querySelectorAll('.skill-pill'); if(pills[i]) pills[i].textContent=val; };
+  window.admDeleteSkill = function(i){ const pills=document.querySelectorAll('.skill-pill'); if(pills[i]) pills[i].remove(); admRenderSkills(); };
   window.admAddSkill = function(){
-    const strip = document.querySelector('.skills-strip');
-    const pill = document.createElement('span');
-    pill.className = 'skill-pill';
-    pill.textContent = 'Neuer Skill';
-    strip.appendChild(pill);
-    admRenderSkills();
+    const strip=document.querySelector('.skills-strip');
+    const pill=document.createElement('span'); pill.className='skill-pill'; pill.textContent='Neuer Skill';
+    strip.appendChild(pill); admRenderSkills();
   };
 
-  /* ── Projekte ───────────────────────────────────────────────────── */
+  /* ════════════════════════════════════════════════════════════════
+     Projekte — mit ↑↓ Sortierung
+     ════════════════════════════════════════════════════════════════ */
   function admRenderProjects(){
-    const list = document.getElementById('admProjList');
-    list.innerHTML = '';
-    PROJECTS.forEach((p, pi)=>{
-      const item = document.createElement('div');
-      item.className = 'adm-proj-item';
-      item.innerHTML = `
+    const list=document.getElementById('admProjList');
+    list.innerHTML='';
+    PROJECTS.forEach((p,pi)=>{
+      const item=document.createElement('div');
+      item.className='adm-proj-item';
+      item.innerHTML=`
         <div class="adm-proj-head" onclick="admToggleProj(this)">
+          <div style="display:flex;gap:.25rem;flex-shrink:0" onclick="event.stopPropagation()">
+            <button class="adm-proj-move" onclick="admMoveProject(${pi},-1)" ${pi===0?'disabled':''} title="Nach oben">↑</button>
+            <button class="adm-proj-move" onclick="admMoveProject(${pi},1)"  ${pi===PROJECTS.length-1?'disabled':''} title="Nach unten">↓</button>
+          </div>
           <span class="adm-proj-head-title">${p.title.de||('Projekt '+(pi+1))}</span>
           <span class="adm-proj-toggle">▾</span>
         </div>
@@ -1488,36 +1028,47 @@ document.getElementById('modeBtn').textContent =
       list.appendChild(item);
     });
   }
+
   window.admToggleProj = function(head){
-    const toggle = head.querySelector('.adm-proj-toggle');
-    const body = head.nextElementSibling;
+    const toggle=head.querySelector('.adm-proj-toggle');
+    const body=head.nextElementSibling;
     toggle.classList.toggle('open');
     body.classList.toggle('open');
   };
-  let admProjLangMap = {};
-  window.admProjLang = function(btn, pi, l){
-    admProjLangMap[pi] = l;
-    const siblings = btn.closest('.adm-proj-lang-sw').querySelectorAll('.adm-lbtn');
-    siblings.forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('admPT'+pi).value = PROJECTS[pi].title[l]||'';
-    document.getElementById('admPD'+pi).value = PROJECTS[pi].desc[l]||'';
-  };
-  window.admUpdateProjTitle = function(pi, val){
-    const l = admProjLangMap[pi]||'de';
-    PROJECTS[pi].title[l] = val;
-    document.querySelector('#admProjBody'+pi+' .adm-proj-head-title') &&
-      (document.querySelector('#admProjBody'+pi).previousElementSibling.querySelector('.adm-proj-head-title').textContent = PROJECTS[pi].title.de||val);
+
+  /* ── NEU: Projekte umsortieren ── */
+  window.admMoveProject = function(pi, dir){
+    const target = pi + dir;
+    if(target < 0 || target >= PROJECTS.length) return;
+    [PROJECTS[pi], PROJECTS[target]] = [PROJECTS[target], PROJECTS[pi]];
+    admRenderProjects();
     renderGrid();
   };
-  window.admUpdateProjDesc = function(pi, val){
-    const l = admProjLangMap[pi]||'de';
-    PROJECTS[pi].desc[l] = val;
+
+  let admProjLangMap={};
+  window.admProjLang = function(btn,pi,l){
+    admProjLangMap[pi]=l;
+    const siblings=btn.closest('.adm-proj-lang-sw').querySelectorAll('.adm-lbtn');
+    siblings.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('admPT'+pi).value=PROJECTS[pi].title[l]||'';
+    document.getElementById('admPD'+pi).value=PROJECTS[pi].desc[l]||'';
+  };
+  window.admUpdateProjTitle = function(pi,val){
+    const l=admProjLangMap[pi]||'de';
+    PROJECTS[pi].title[l]=val;
+    const headTitle=document.querySelector(`#admProjBody${pi}`)?.previousElementSibling?.querySelector('.adm-proj-head-title');
+    if(headTitle) headTitle.textContent=PROJECTS[pi].title.de||val;
+    renderGrid();
+  };
+  window.admUpdateProjDesc = function(pi,val){
+    const l=admProjLangMap[pi]||'de';
+    PROJECTS[pi].desc[l]=val;
     renderGrid();
   };
   window.admDeleteProject = function(pi){
     if(!confirm('Projekt wirklich entfernen?')) return;
-    PROJECTS.splice(pi, 1);
+    PROJECTS.splice(pi,1);
     admRenderProjects();
     renderGrid();
   };
@@ -1532,86 +1083,62 @@ document.getElementById('modeBtn').textContent =
     renderGrid();
   };
 
-  /* ── Export — erzeugt saubere index.html ohne Admin-Panel ───────── */
+  /* ── Export ── */
   window.admExport = function(){
-    // Aktuelle Seiten-Werte einlesen
-    const pageTitle   = document.getElementById('adm_pageTitle').value || document.title;
-    const logoText    = document.getElementById('adm_logoText').value || 'Portfolio';
-    const metaDesc    = document.getElementById('adm_metaDesc').value;
-    const email       = document.getElementById('adm_email').value;
-    const copyright   = document.getElementById('adm_copyright').value;
-    const skills      = [...document.querySelectorAll('.skill-pill')].map(p=>p.textContent.trim());
+    const pageTitle = document.getElementById('adm_pageTitle').value || document.title;
+    const logoText  = document.getElementById('adm_logoText').value || 'Portfolio';
+    const metaDesc  = document.getElementById('adm_metaDesc').value;
+    const email     = document.getElementById('adm_email').value;
+    const copyright = document.getElementById('adm_copyright').value;
+    const skills    = [...document.querySelectorAll('.skill-pill')].map(p=>p.textContent.trim());
 
-    // HTML-Quelltext der aktuellen Seite
     let html = document.documentElement.outerHTML;
-
-    // Admin-Bereiche entfernen
     html = html.replace(/\/\* ADMIN-CSS-START \*\/[\s\S]*?\/\* ADMIN-CSS-END \*\//g,'');
     html = html.replace(/<!-- ADMIN-PANEL-START -->[\s\S]*?<!-- ADMIN-PANEL-END -->/g,'');
     html = html.replace(/\/\* ADMIN-JS-START \*\/[\s\S]*?\/\* ADMIN-JS-END \*\//g,'');
-    // Toggle-Button (sicherheitshalber)
     html = html.replace(/<button[^>]*id="adminToggle"[^>]*>[\s\S]*?<\/button>/g,'');
-
-    // <title> aktualisieren
     html = html.replace(/<title>[^<]*<\/title>/, `<title>${pageTitle}</title>`);
-
-    // Meta-Beschreibung
     html = html.replace(/(<meta name="description" content=")[^"]*"/i, `$1${metaDesc}"`);
-
-    // Logo
     html = html.replace(/(<a[^>]*class="nav-logo"[^>]*>)([\s\S]*?)(<span>)/, `$1${logoText}$3`);
-
-    // E-Mail
     html = html.replace(/href="mailto:[^"]*">[^<]*/g, `href="mailto:${email}">${email}`);
-
-    // Copyright
     html = html.replace(/(©[^<]*)/g, copyright || '$1');
 
-    // Skill-Pills
     const pillsHtml = skills.map(s=>`  <span class="skill-pill">${s}</span>`).join('\n');
     html = html.replace(/(<span class="skills-label"[^>]*>[\s\S]*?<\/span>)([\s\S]*?)(<\/div>\s*<!--[^>]*FOOTER)/,
       (m,label,_,footer)=>label+'\n'+pillsHtml+'\n'+footer);
 
-    // T und PROJECTS serialisieren
     const Tstr  = JSON.stringify(T,null,2);
     const PRstr = JSON.stringify(PROJECTS,null,2);
     html = html.replace(/const T = \{[\s\S]*?^\};/m, 'const T = '+Tstr+';');
     html = html.replace(/const PROJECTS = \[[\s\S]*?^\];/m, 'const PROJECTS = '+PRstr+';');
-
-    // Admin-Panel open-Klasse entfernen
     html = html.replace(/id="adminPanel" class="[^"]*open[^"]*"/g,'id="adminPanel" class=""');
 
-    // Ergebnis als Datei herunterladen
-    const blob = new Blob([html], {type:'text/html;charset=utf-8'});
-    const url  = URL.createObjectURL(blob);
-    const a    = document.createElement('a');
+    const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
     a.href=url; a.download='index.html'; a.click();
     URL.revokeObjectURL(url);
     admToast('✓ index.html exportiert!');
   };
 
-  /* ── Import ─────────────────────────────────────────────────────── */
+  /* ── Import ── */
   window.admImport = function(ev){
-    const file = ev.target.files[0];
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = function(e){
-      // T-Objekt aus der Datei extrahieren
-      const html = e.target.result;
-      const tMatch = html.match(/const T = (\{[\s\S]*?^\});/m);
-      const pMatch = html.match(/const PROJECTS = (\[[\s\S]*?^\]);/m);
+    const file=ev.target.files[0]; if(!file) return;
+    const reader=new FileReader();
+    reader.onload=function(e){
+      const html=e.target.result;
+      const tMatch=html.match(/const T = (\{[\s\S]*?^\});/m);
+      const pMatch=html.match(/const PROJECTS = (\[[\s\S]*?^\]);/m);
       try {
-        if(tMatch)  { const newT = JSON.parse(tMatch[1]);  Object.assign(T,newT); }
-        if(pMatch)  { const newP = JSON.parse(pMatch[1]);  PROJECTS.splice(0,PROJECTS.length,...newP); }
-      } catch(err) { console.warn('Import parse error',err); }
-      // Logo / E-Mail aus dem HTML lesen
-      const logoM = html.match(/<a[^>]*class="nav-logo"[^>]*>([^<]*)/);
-      if(logoM && document.getElementById('adm_logoText')) document.getElementById('adm_logoText').value = logoM[1].trim();
-      const mailM = html.match(/href="mailto:([^"]*)"/);
-      if(mailM && document.getElementById('adm_email')) document.getElementById('adm_email').value = mailM[1];
-      const cpM = html.match(/(©[^<]{0,80})/);
-      if(cpM && document.getElementById('adm_copyright')) document.getElementById('adm_copyright').value = cpM[1].trim();
-      // Neu rendern
+        if(tMatch){ const newT=JSON.parse(tMatch[1]); Object.assign(T,newT); }
+        if(pMatch){ const newP=JSON.parse(pMatch[1]); PROJECTS.splice(0,PROJECTS.length,...newP); }
+      } catch(err){ console.warn('Import parse error',err); }
+      const logoM=html.match(/<a[^>]*class="nav-logo"[^>]*>([^<]*)/);
+      if(logoM && document.getElementById('adm_logoText')) document.getElementById('adm_logoText').value=logoM[1].trim();
+      const mailM=html.match(/href="mailto:([^"]*)"/);
+      if(mailM && document.getElementById('adm_email')) document.getElementById('adm_email').value=mailM[1];
+      const cpM=html.match(/(©[^<]{0,80})/);
+      if(cpM && document.getElementById('adm_copyright')) document.getElementById('adm_copyright').value=cpM[1].trim();
       setLang(LANG);
       admInit();
       admToast('✓ Datei importiert!');
@@ -1620,62 +1147,33 @@ document.getElementById('modeBtn').textContent =
     ev.target.value='';
   };
 
-  /* ── Toast ──────────────────────────────────────────────────────── */
   function admToast(msg){
-    const t = document.getElementById('admToast');
-    t.textContent = msg||'✓';
+    const t=document.getElementById('admToast');
+    t.textContent=msg||'✓';
     t.classList.add('show');
     setTimeout(()=>t.classList.remove('show'),2400);
   }
 
-  /* ── Initialisierung ─────────────────────────────────────────────── */
   function admInit(){
-    // Allgemein
-    document.getElementById('adm_pageTitle').value = document.title;
-    const logo = document.querySelector('.nav-logo');
-    if(logo) document.getElementById('adm_logoText').value = (logo.childNodes[0]||{}).textContent||'Portfolio';
-    const meta = document.querySelector('meta[name="description"]');
-    if(meta) document.getElementById('adm_metaDesc').value = meta.getAttribute('content')||'';
-    // Hero (DE)
+    document.getElementById('adm_pageTitle').value=document.title;
+    const logo=document.querySelector('.nav-logo');
+    if(logo) document.getElementById('adm_logoText').value=(logo.childNodes[0]||{}).textContent||'Portfolio';
+    const meta=document.querySelector('meta[name="description"]');
+    if(meta) document.getElementById('adm_metaDesc').value=meta.getAttribute('content')||'';
     admPopulateHero();
-    // Kontakt
-    const mailEl = document.querySelector('footer a[href^="mailto"]');
-    if(mailEl) document.getElementById('adm_email').value = mailEl.textContent.trim();
-    const cpEl = document.querySelector('footer > div:last-child');
-    if(cpEl) document.getElementById('adm_copyright').value = cpEl.textContent.trim();
-    // Skills + Projekte
+    const mailEl=document.querySelector('footer a[href^="mailto"]');
+    if(mailEl) document.getElementById('adm_email').value=mailEl.textContent.trim();
+    const cpEl=document.querySelector('footer > div:last-child');
+    if(cpEl) document.getElementById('adm_copyright').value=cpEl.textContent.trim();
     admRenderSkills();
     admRenderProjects();
   }
 
-  // Inline-Funktion bereitstellen (Hero-Tab)
-  function admPopulateHero(){
-    const t = T[admHL]||T['de'];
-    document.getElementById('adm_heroTag').value    = t.hero_tag     || '';
-    document.getElementById('adm_heroL0').value     = (t.hero_lines||[])[0] || '';
-    document.getElementById('adm_heroL1').value     = (t.hero_lines||[])[1] || '';
-    document.getElementById('adm_heroL2').value     = (t.hero_lines||[])[2] || '';
-    document.getElementById('adm_heroDesc').value   = t.hero_desc    || '';
-    document.getElementById('adm_heroCta').value    = t.hero_cta     || '';
-    document.getElementById('adm_navProj').value    = t.nav_proj     || '';
-    document.getElementById('adm_navContact').value = t.nav_contact  || '';
-    document.getElementById('adm_scroll').value     = t.scroll       || '';
-    document.getElementById('adm_sectionLbl').value = t.section_lbl  || '';
-    document.getElementById('adm_techStack').value  = t.tech_stack   || '';
-    document.getElementById('adm_contactReady').value = t.contact_ready || '';
-    document.getElementById('adm_projLink').value   = t.proj_link    || '';
-    document.getElementById('adm_platWeb').value    = t.plat_web     || '';
-    document.getElementById('adm_platAndroid').value= t.plat_android || '';
-    document.getElementById('adm_platIos').value    = t.plat_ios     || '';
-  }
-
-  // Initialisierung nach kurzer Verzögerung (DOM fertig)
   setTimeout(admInit, 600);
 
 })();
 /* ADMIN-JS-END */
 
-/* Gespeicherte Sprache + Farbe wiederherstellen */
 setLang(LANG);
 setColor(COLOR);
 obAll();
